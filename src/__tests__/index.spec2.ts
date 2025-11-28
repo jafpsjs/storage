@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 import fastify from "fastify";
 import plugin from "../index.js";
 
-describe("@jafps/plugin-template", () => {
+describe("@jafps/plugin-storage", () => {
   describe("hello", () => {
     it("should return value", async () => {
       const value = "world";

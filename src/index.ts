@@ -6,7 +6,7 @@ export type TemplatePluginOptions = {
   value: string;
 };
 
-export const name = "@jafps/plugin-template";
+export const name = "@jafps/plugin-storage";
 
 export default fp<TemplatePluginOptions>(
   async (app, opts) => {

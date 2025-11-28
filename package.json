@@ -1,29 +1,38 @@
 {
-  "name": "@jafps/plugin-template",
+  "name": "@jafps/plugin-storage",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fastify plugin for storage.",
   "type": "module",
-  "private": true,
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc",
-    "test": "node --enable-source-maps --experimental-test-coverage --test-coverage-exclude \"src/**/__tests__/*.ts\" --test \"./dist/**/__tests__/*.{spec,test}.js\"",
+    "test": "node --env-file-if-exists=.env --enable-source-maps --experimental-test-coverage --test-coverage-exclude \"src/**/__tests__/*.ts\" --test \"./dist/**/__tests__/*.{spec,test}.js\"",
     "lint": "eslint"
   },
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jafpsjs/plugin-template.git"
+    "url": "git+https://github.com/jafpsjs/plugin-storage.git"
   },
   "bugs": {
-    "url": "https://github.com/jafpsjs/plugin-template/issues"
+    "url": "https://github.com/jafpsjs/plugin-storage/issues"
   },
-  "homepage": "https://github.com/jafpsjs/plugin-template#readme",
-  "imports": {},
+  "homepage": "https://github.com/jafpsjs/plugin-storage#readme",
+  "imports": {
+    "#type": {
+      "import": "./dist/type/index.js"
+    },
+    "#util": {
+      "import": "./dist/util/index.js"
+    }
+  },
   "exports": {
     ".": {
       "import": "./dist/index.js"
+    },
+    "./util": {
+      "import": "./dist/util/index.js"
     }
   },
   "keywords": [
@@ -35,15 +44,22 @@
     "!dist/**/__tests__/**/*"
   ],
   "devDependencies": {
+    "@joshuaavalon/eslint-config-javascript": "^10.0.0",
     "@joshuaavalon/eslint-config-typescript": "^10.0.0",
+    "@types/cloneable-readable": "^2.0.3",
     "@types/node": "^24.9.1",
     "eslint": "^9.38.0",
     "fastify": "^5.6.1",
     "globals": "^16.4.0",
     "rimraf": "^6.0.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.0"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.939.0",
+    "@aws-sdk/lib-storage": "^3.939.0",
+    "@smithy/types": "^4.9.0",
+    "cloneable-readable": "^3.0.0",
     "fastify-plugin": "^5.1.0"
   }
 }

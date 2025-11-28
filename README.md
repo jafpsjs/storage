@@ -1,3 +1,3 @@
-# @jafps/plugin-template
+# @jafps/plugin-storage
 
-Template repository for Fastify Plugin.
+Fastify plugin for storage.
