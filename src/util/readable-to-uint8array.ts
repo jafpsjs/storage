@@ -1,6 +1,8 @@
+/* node:coverage disable */
 import type { Buffer } from "node:buffer";
 import type { Readable } from "node:stream";
 
+/* node:coverage enable */
 
 function concatUint8Arrays(arrays: Uint8Array[]): Uint8Array {
   if (arrays.length === 0) {

@@ -1,7 +1,8 @@
-import { Duplex } from "node:stream";
 import { DeleteObjectCommand, GetObjectCommand, HeadObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
-import type { Readable } from "node:stream";
+import { createEmptyStream } from "#util";
+
+/* node:coverage disable */
 import type { NodeJsClient } from "@smithy/types";
 import type { FastifyBaseLogger } from "fastify";
 import type { Storage, StorageInput, StorageMetadataOutput, StorageOutput } from "#type";
@@ -22,12 +23,7 @@ export interface S3StorageInstanceOptions {
 
 export type S3StorageOptions = { logger: FastifyBaseLogger } & (S3StorageConfigOptions | S3StorageInstanceOptions);
 
-function createEmptyStream(): Readable {
-  const data = new Duplex();
-  data.push(null);
-  data.end();
-  return data;
-}
+/* node:coverage enable */
 
 
 export class S3Storage implements Storage {
@@ -59,10 +55,6 @@ export class S3Storage implements Storage {
         requestChecksumCalculation: "WHEN_SUPPORTED"
       });
     }
-  }
-
-  public name(): string {
-    return "S3Storage";
   }
 
   public async write(key: string, input: StorageInput): Promise<StorageMetadataOutput> {

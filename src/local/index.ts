@@ -38,10 +38,6 @@ export class LocalStorage implements Storage {
     this.metadataEncoding = metadataEncoding;
   }
 
-  public name(): string {
-    return "LocalStorage";
-  }
-
   private blobPath(key: string): string {
     return join(this.baseDir, key, this.blobKey);
   }
@@ -116,8 +112,8 @@ export class LocalStorage implements Storage {
     }
     const blobPath = this.blobPath(key);
     const metadataPath = this.metadataPath(key);
-    await mkdir(dirname(blobPath), { recursive: true });
     try {
+      await mkdir(dirname(blobPath), { recursive: true });
       const blobStream = cloneable(blob);
       const metadataStream = blobStream.clone();
       const [metadata] = await Promise.all([
@@ -127,7 +123,7 @@ export class LocalStorage implements Storage {
       return metadata;
     } catch (err) {
       this.logger.error({ err }, "Failed to write file");
-      this.delete(key);
+      await this.delete(key);
       throw err;
     }
   }
@@ -135,25 +131,25 @@ export class LocalStorage implements Storage {
   public async read(key: string): Promise<StorageOutput> {
     this.logger.debug({ key }, "Read file");
     const blobPath = this.blobPath(key);
-    const [stats, metadata] = await Promise.all([
-      this.readLocalStat(key),
-      this.readLocalMetadata(key)
-    ]);
-    const eTag = metadata.eTag ?? await checksumOf(createReadStream(blobPath));
+    const metadata = await this.readMetadata(key);
     return {
       ...metadata,
-      ...stats,
-      body: createReadStream(blobPath),
-      eTag
+      body: createReadStream(blobPath)
     };
   }
 
   public async readMetadata(key: string): Promise<StorageMetadataOutput> {
     this.logger.debug({ key }, "Read file metadata");
+    const blobPath = this.blobPath(key);
     const [metadata, stats] = await Promise.all([
       this.readLocalMetadata(key),
       this.readLocalStat(key)
     ]);
-    return { ...metadata, ...stats };
+    const eTag = metadata.eTag ?? await checksumOf(createReadStream(blobPath));
+    return {
+      ...metadata,
+      ...stats,
+      eTag
+    };
   }
 }
