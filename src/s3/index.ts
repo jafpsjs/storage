@@ -61,6 +61,10 @@ export class S3Storage implements Storage {
     }
   }
 
+  public name(): string {
+    return "S3Storage";
+  }
+
   public async write(key: string, input: StorageInput): Promise<StorageMetadataOutput> {
     this.logger.debug({ key }, "Write file");
     const { blob, contentType } = input;

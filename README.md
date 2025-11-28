@@ -1,3 +1,3 @@
-# @jafps/plugin-storage
+# @jafps/storage
 
-Fastify plugin for storage.
+Functions for handling storage.

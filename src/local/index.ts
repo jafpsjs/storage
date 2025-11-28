@@ -38,6 +38,10 @@ export class LocalStorage implements Storage {
     this.metadataEncoding = metadataEncoding;
   }
 
+  public name(): string {
+    return "LocalStorage";
+  }
+
   private blobPath(key: string): string {
     return join(this.baseDir, key, this.blobKey);
   }

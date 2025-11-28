@@ -1,7 +1,7 @@
 {
-  "name": "@jafps/plugin-storage",
+  "name": "@jafps/storage",
   "version": "1.0.0",
-  "description": "Fastify plugin for storage.",
+  "description": "Functions for handling storage.",
   "type": "module",
   "scripts": {
     "prebuild": "rimraf dist",
@@ -13,12 +13,12 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jafpsjs/plugin-storage.git"
+    "url": "git+https://github.com/jafpsjs/storage.git"
   },
   "bugs": {
-    "url": "https://github.com/jafpsjs/plugin-storage/issues"
+    "url": "https://github.com/jafpsjs/storage/issues"
   },
-  "homepage": "https://github.com/jafpsjs/plugin-storage#readme",
+  "homepage": "https://github.com/jafpsjs/storage#readme",
   "imports": {
     "#type": {
       "import": "./dist/type/index.js"
@@ -49,7 +49,7 @@
     "@types/cloneable-readable": "^2.0.3",
     "@types/node": "^24.9.1",
     "eslint": "^9.38.0",
-    "fastify": "^5.6.1",
+    "fastify": "^5.6.2",
     "globals": "^16.4.0",
     "rimraf": "^6.0.1",
     "typescript": "^5.9.3",
@@ -59,7 +59,6 @@
     "@aws-sdk/client-s3": "^3.939.0",
     "@aws-sdk/lib-storage": "^3.939.0",
     "@smithy/types": "^4.9.0",
-    "cloneable-readable": "^3.0.0",
-    "fastify-plugin": "^5.1.0"
+    "cloneable-readable": "^3.0.0"
   }
 }
