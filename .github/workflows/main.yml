@@ -51,6 +51,7 @@ jobs:
           bucket: "garage"
       - run: pnpm i --frozen-lockfile
       - run: pnpm run build
+      - run: touch .env
       - run: pnpm run test
         env:
           TEST_S3_BUCKET: ${{ steps.s3.outputs.s3_bucket }}
