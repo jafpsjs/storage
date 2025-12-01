@@ -1,6 +1,6 @@
 import { DeleteObjectCommand, GetObjectCommand, HeadObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
-import { createEmptyStream } from "#util";
+import { assertValidKey, createEmptyStream } from "#util";
 
 /* node:coverage disable */
 import type { NodeJsClient } from "@smithy/types";
@@ -59,6 +59,7 @@ export class S3Storage implements Storage {
 
   public async write(key: string, input: StorageInput): Promise<StorageMetadataOutput> {
     this.logger.debug({ key }, "Write file");
+    assertValidKey(key);
     const { blob, contentType } = input;
     const upload = new Upload({
       client: this.client,
@@ -81,6 +82,7 @@ export class S3Storage implements Storage {
 
   public async read(key: string): Promise<StorageOutput> {
     this.logger.debug({ key }, "Read file");
+    assertValidKey(key);
     const cmd = new GetObjectCommand({
       Bucket: this.bucket,
       ChecksumMode: "ENABLED",
@@ -99,6 +101,7 @@ export class S3Storage implements Storage {
 
   public async readMetadata(key: string): Promise<StorageMetadataOutput> {
     this.logger.debug({ key }, "Read file metadata");
+    assertValidKey(key);
     const cmd = new HeadObjectCommand({
       Bucket: this.bucket,
       ChecksumMode: "ENABLED",
@@ -116,6 +119,7 @@ export class S3Storage implements Storage {
 
   public async delete(key: string): Promise<void> {
     this.logger.debug({ key }, "Delete file");
+    assertValidKey(key);
     const cmd = new DeleteObjectCommand({
       Bucket: this.bucket,
       Key: key

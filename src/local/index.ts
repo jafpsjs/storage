@@ -3,6 +3,7 @@ import { mkdir, readFile, stat, unlink, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { pipeline } from "node:stream/promises";
 import cloneable from "cloneable-readable";
+import { assertValidKey } from "#util";
 import { checksumOf } from "./checksum-of.js";
 import type { FastifyBaseLogger } from "fastify";
 import type { Storage, StorageInput, StorageMetadataOutput, StorageOutput } from "#type";
@@ -92,6 +93,7 @@ export class LocalStorage implements Storage {
 
   public async delete(key: string): Promise<void> {
     this.logger.debug({ key }, "Delete file");
+    assertValidKey(key);
     const blobPath = this.blobPath(key);
     const metadataPath = this.metadataPath(key);
     try {
@@ -106,6 +108,7 @@ export class LocalStorage implements Storage {
 
   public async write(key: string, input: StorageInput): Promise<StorageMetadataOutput> {
     this.logger.debug({ key }, "Write file");
+    assertValidKey(key);
     const { blob, contentType } = input;
     if (typeof contentType !== "string" && typeof contentType !== "undefined") {
       throw new Error("contentType must be string or undefined");
@@ -130,6 +133,7 @@ export class LocalStorage implements Storage {
 
   public async read(key: string): Promise<StorageOutput> {
     this.logger.debug({ key }, "Read file");
+    assertValidKey(key);
     const blobPath = this.blobPath(key);
     const metadata = await this.readMetadata(key);
     return {
@@ -140,6 +144,7 @@ export class LocalStorage implements Storage {
 
   public async readMetadata(key: string): Promise<StorageMetadataOutput> {
     this.logger.debug({ key }, "Read file metadata");
+    assertValidKey(key);
     const blobPath = this.blobPath(key);
     const [metadata, stats] = await Promise.all([
       this.readLocalMetadata(key),

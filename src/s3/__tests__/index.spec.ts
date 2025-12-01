@@ -72,6 +72,14 @@ describe("S3Storage", async () => {
     assert.equal(result.contentType, expected);
   });
 
+  it("should throw if key is invalid", async () => {
+    const blob = new Uint8Array(randomBytes(32));
+    const key = "\\/?!.*";
+    assert.rejects(async () => {
+      await storage.write(key, { blob: uint8ArrayToReadable(blob) });
+    });
+  });
+
   after(async () => {
     await Promise.allSettled(keys.map(key => storage.delete(key)));
   });
