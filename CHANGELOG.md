@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/jafpsjs/storage/compare/v1.0.1...v1.0.2) (2025-12-22)
+
+
+### Bug Fixes
+
+* Cleanup empty directory after delete for LocalStorage ([02003f4](https://github.com/jafpsjs/storage/commit/02003f4f77d4efe6dedcfb02b43faea57818d057))
+* Use rmdir for removing directory ([5febe6f](https://github.com/jafpsjs/storage/commit/5febe6f7ae1dc264646ef343dabdfe2cafd4a1cc))
+
 ## [1.0.1](https://github.com/jafpsjs/storage/compare/v1.0.0...v1.0.1) (2025-12-16)
 
 
