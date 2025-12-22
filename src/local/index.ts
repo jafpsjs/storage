@@ -1,5 +1,5 @@
 import { createReadStream, createWriteStream } from "node:fs";
-import { mkdir, readFile, stat, unlink, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rmdir, stat, unlink, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { pipeline } from "node:stream/promises";
 import cloneable from "cloneable-readable";
@@ -103,7 +103,7 @@ export class LocalStorage implements Storage {
         unlink(this.blobPath(key)),
         unlink(this.metadataPath(key))
       ]);
-      await unlink(this.dirPath(key));
+      await rmdir(this.dirPath(key));
     } catch (err) {
       this.logger.error({ err }, "Failed to delete file");
     }
