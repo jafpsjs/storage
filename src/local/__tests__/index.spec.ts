@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { randomBytes, randomUUID } from "node:crypto";
-import { mkdir, unlink, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
+import { mkdir, readdir, unlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { after, before, describe, it } from "node:test";
@@ -95,6 +96,26 @@ describe("LocalStorage", async () => {
       await storage.readMetadata(key);
     });
     await unlink(metadataPath);
+  });
+
+  it("should delete directory if empty", async () => {
+    const blob = new Uint8Array(randomBytes(32));
+    const key = randomUUID();
+    await storage.write(key, { blob: uint8ArrayToReadable(blob), contentType: "image/jpeg" });
+    await storage.delete(key);
+    const dirPath = join(tmpdir(), key);
+    assert.equal(existsSync(dirPath), false);
+  });
+
+  it("should not delete directory if not empty", async () => {
+    const blob = new Uint8Array(randomBytes(32));
+    const key = randomUUID();
+    await storage.write(key, { blob: uint8ArrayToReadable(blob), contentType: "image/jpeg" });
+    const dirPath = join(tmpdir(), key);
+    await writeFile(join(dirPath, "a"), "!", { encoding: "utf-8" });
+    await storage.delete(key);
+    const dirContent = await readdir(dirPath);
+    assert.equal(dirContent.length, 1);
   });
 
   after(async () => {

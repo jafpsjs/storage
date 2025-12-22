@@ -39,12 +39,16 @@ export class LocalStorage implements Storage {
     this.metadataEncoding = metadataEncoding;
   }
 
+  private dirPath(key: string): string {
+    return join(this.baseDir, key);
+  }
+
   private blobPath(key: string): string {
-    return join(this.baseDir, key, this.blobKey);
+    return join(this.dirPath(key), this.blobKey);
   }
 
   private metadataPath(key: string): string {
-    return join(this.baseDir, key, this.metadataKey);
+    return join(this.dirPath(key), this.metadataKey);
   }
 
   private async readLocalMetadata(key: string): Promise<LocalMetadata> {
@@ -94,13 +98,12 @@ export class LocalStorage implements Storage {
   public async delete(key: string): Promise<void> {
     this.logger.debug({ key }, "Delete file");
     assertValidKey(key);
-    const blobPath = this.blobPath(key);
-    const metadataPath = this.metadataPath(key);
     try {
       await Promise.all([
-        unlink(blobPath),
-        unlink(metadataPath)
+        unlink(this.blobPath(key)),
+        unlink(this.metadataPath(key))
       ]);
+      await unlink(this.dirPath(key));
     } catch (err) {
       this.logger.error({ err }, "Failed to delete file");
     }
