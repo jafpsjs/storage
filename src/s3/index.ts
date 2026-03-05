@@ -11,6 +11,7 @@ export interface S3StorageConfigOptions {
   accessKey: string;
   bucket: string;
   endpoint?: string;
+  forcePathStyle?: boolean;
   region?: string;
   secretKey: string;
 }
@@ -41,6 +42,7 @@ export class S3Storage implements Storage {
       const {
         accessKey: accessKeyId,
         endpoint,
+        forcePathStyle,
         region = "us-east-1",
         secretKey: secretAccessKey
       } = opts;
@@ -50,7 +52,7 @@ export class S3Storage implements Storage {
           secretAccessKey
         },
         endpoint,
-        forcePathStyle: true,
+        forcePathStyle,
         region,
         requestChecksumCalculation: "WHEN_SUPPORTED"
       });
