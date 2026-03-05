@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.3](https://github.com/jafpsjs/storage/compare/v1.0.2...v1.0.3) (2026-03-05)
+
+
+### Bug Fixes
+
+* Add forcePathStyle option ([dea855e](https://github.com/jafpsjs/storage/commit/dea855e3971347afd47ebb6443f5b817e247b592))
+* Update dependencies ([f5b0321](https://github.com/jafpsjs/storage/commit/f5b032108468b0e177a5b1226ac74aaf386db458))
+
 ## [1.0.2](https://github.com/jafpsjs/storage/compare/v1.0.1...v1.0.2) (2025-12-22)
 
 
