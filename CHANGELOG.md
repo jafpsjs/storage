@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/jafpsjs/storage/compare/v1.0.3...v1.0.4) (2026-05-13)
+
+
+### Bug Fixes
+
+* Update dependencies ([3a3bbb1](https://github.com/jafpsjs/storage/commit/3a3bbb1b6270e3cfb1ebfed81959bf3b520dc0b5))
+
 ## [1.0.3](https://github.com/jafpsjs/storage/compare/v1.0.2...v1.0.3) (2026-03-05)
 
 
